@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LocalDelivery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body{
+      margin:0;
+      font-family:'Inter','Segoe UI',Arial,sans-serif;
+      background:#f1f5f9;
+      min-height:100vh;
+    }
+
+    /* App container */
+    .app{
+      max-width:1200px;
+      width:100%;
+      margin:24px auto;
+      background:#fff;
+      border-radius:20px;
+      overflow:hidden;
+    }
+
+    /* Header */
+    .header{
+      background:#0f172a;
+      color:#fff;
+      padding:16px;
+    }
+
+    .header h1{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      font-size:28px;
+    }
+
+    /* Categories */
+    .categories{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr); /* equal width categories for desktop */
+      gap:16px;
+      padding:16px;
+    }
+
+    /* Mobile/App layout automatically */
+    /* ===== RESPONSIVE: SMALL → LARGE (AUTO) ===== */
+@media (max-width: 480px){
+  /* Small mobile */
+  .app{
+    width:100%;
+    margin:0;
+    border-radius:0;
+    min-height:100vh;
+  }
+  .categories{
+    grid-template-columns:1fr; /* stack */
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px){
+  /* Large mobile / small tablet */
+  .app{
+    max-width:100%;
+    margin:0;
+    border-radius:0;
+    min-height:100vh;
+  }
+  .categories{
+    grid-template-columns:repeat(2,1fr); /* 2 per row */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px){
+  /* Tablet */
+  .app{
+    max-width:960px;
+    margin:16px auto;
+    border-radius:16px;
+  }
+  .categories{
+    grid-template-columns:repeat(4,1fr); /* equal */
+  }
+}
+
+@media (min-width: 1025px){
+  /* Desktop / large screens */
+  .app{
+    max-width:1200px;
+    margin:24px auto;
+    border-radius:20px;
+  }
+  .categories{
+    grid-template-columns:repeat(4,1fr); /* equal */
+  }
+}
+      .categories{
+        flex-direction:column;
+      }
+    }
+      .categories{
+        flex-direction:column; /* mobile vertical */
+      }
+    }
+
+    .category{
+      height:130px;              /* increased base height */
+      width:100%;                /* equal width via grid */
+      border-radius:20px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
+      padding:20px;
+      font-family:'Poppins',sans-serif;
+      font-size:22px;
+      font-weight:600;
+      color:#fff;
+      cursor:pointer;
+      background-size:contain;
+      background-position:center;
+    }
+
+/* Extra large screens */
+@media (min-width:1025px){
+  .category{
+    height:140px;
+    font-size:24px;
+  }
+}
+
+/* Tablets */
+@media (min-width:769px) and (max-width:1024px){
+  .category{
+    height:130px;
+    font-size:22px;
+  }
+}
+
+/* Mobile */
+@media (max-width:768px){
+  .category{
+    height:120px;
+    font-size:20px;
+  }
+}
+
+    .food{background-image:url('https://www.dealsshutter.com/blog/wp-content/uploads/2019/07/cheap-food-online-order.jpg');}
+    .grocery{background-image:url('https://thumbs.dreamstime.com/b/supermarket-vegetables-vegetable-store-food-grocery-background-59070028.jpg');}
+    .medicine{background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAVifggYAWKgG95YatHXpZxL72tXPDct2ciQ&s');}
+    .other{background:#000;}
+
+    /* Products */
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:16px;
+      padding:16px;
+    }
+
+    .card{
+      position:relative;
+      height:200px;
+      border-radius:16px;
+      overflow:hidden;
+      color:#fff;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:var(--bg);
+      background-size:contain;
+      background-position:center;
+    }
+
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.45);
+    }
+
+    .card-content{
+      position:absolute;
+      bottom:0;
+      padding:10px;
+      width:100%;
+    }
+
+    .actions{
+      display:flex;
+      gap:6px;
+      margin-top:6px;
+    }
+
+    .actions button{
+      flex:1;
+      padding:6px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      color:#fff;
+      background:#22c55e;
+      font-size:12px;
+    }
+
+    .actions .order{background:#2563eb;}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <h1>LocalDelivery</h1>
+  </header>
+
+  <section class="categories">
+    <div class="category food" data-type="food">🍔 Food</div>
+    <div class="category grocery" data-type="grocery">🥦 Grocery</div>
+    <div class="category medicine" data-type="medicine">💊 Medicines</div>
+    <div class="category other" data-type="other">📦 Others</div>
+  </section>
+
+  <section class="products" id="products">
+    <p>Select a category to view items</p>
+  </section>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const productsDiv = document.getElementById('products');
+
+  const productsData = {
+    food:[
+      {name:'Chicken Biryani',price:180,img:'https://www.dealsshutter.com/blog/wp-content/uploads/2019/07/cheap-food-online-order.jpg'},
+      {name:'Burger',price:120,img:'https://www.dealsshutter.com/blog/wp-content/uploads/2019/07/cheap-food-online-order.jpg'}
+    ],
+    grocery:[
+      {name:'Vegetables Pack',price:90,img:'https://thumbs.dreamstime.com/b/supermarket-vegetables-vegetable-store-food-grocery-background-59070028.jpg'},
+      {name:'Rice Bag',price:450,img:'https://thumbs.dreamstime.com/b/supermarket-vegetables-vegetable-store-food-grocery-background-59070028.jpg'}
+    ],
+    medicine:[
+      {name:'Pain Relief Tablet',price:60,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAVifggYAWKgG95YatHXpZxL72tXPDct2ciQ&s'},
+      {name:'First Aid Kit',price:250,img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAVifggYAWKgG95YatHXpZxL72tXPDct2ciQ&s'}
+    ],
+    other:[]
+  };
+
+  document.querySelectorAll('.category').forEach(cat=>{
+    cat.addEventListener('click',()=>showProducts(cat.dataset.type));
+  });
+
+  function showProducts(type){
+    productsDiv.innerHTML='';
+
+    if(!productsData[type] || productsData[type].length===0){
+      productsDiv.innerHTML='<p>No items available</p>';
+      return;
+    }
+
+    productsData[type].forEach(item=>{
+      productsDiv.innerHTML += `
+        <div class="card" style="--bg:url('${item.img}')">
+          <div class="card-content">
+            <strong>${item.name}</strong><br>
+            ₹${item.price}
+            <div class="actions">
+              <button>Add</button>
+              <button class="order">Order</button>
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+});
+</script>
+</body>
+</html>
